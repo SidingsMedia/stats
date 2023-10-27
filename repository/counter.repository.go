@@ -4,15 +4,15 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-type CounterRepository interface {
+type ViewsRepository interface {
 }
 
-type counterRepository struct {
+type viewsRepository struct {
 	db *pgx.Conn
 }
 
-func NewCounterRepository(db *pgx.Conn) CounterRepository {
-	repository := &counterRepository{
+func NewViewsRepository(db *pgx.Conn) ViewsRepository {
+	repository := &viewsRepository{
 		db: db,
 	}
 	return repository

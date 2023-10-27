@@ -9,14 +9,14 @@ import (
 	"github.com/SidingsMedia/stats/service"
 )
 
-type CounterController interface {
+type ViewsController interface {
 }
 
-type counterController struct {
-	service service.CounterService
+type viewsController struct {
+	service service.ViewsService
 }
 
-func NewCounterController(engine *gin.Engine, service service.CounterService) {
+func NewViewsController(engine *gin.Engine, service service.ViewsService) {
     // controller := &counterController{
     //     service: service,
     // }

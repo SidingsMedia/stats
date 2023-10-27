@@ -42,14 +42,15 @@ func init() {
 }
 
 func main() {
-	timescale, err := util.InitTimescaleDB(util.TimescaleAddr, util.TimescaleUname, util.TimescalePwd, util.TimescaleName)
+	timescale, dbContext, err := util.InitTimescaleDB(util.TimescaleAddr, util.TimescaleUname, util.TimescalePwd, util.TimescaleName)
+	defer timescale.Close(dbContext)
 	if err != nil {
 		log.Fatalf("Failed to connect to timescale database: %s", err)
 	}
 
-	counterRepository := repository.NewCounterRepository(timescale)
+	counterRepository := repository.NewViewsRepository(timescale)
 
-	counterService := service.NewCounterService(counterRepository)
+	counterService := service.NewViewsService(counterRepository)
 
 	engine := gin.Default()
 	engine.Use(cors.Default())

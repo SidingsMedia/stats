@@ -5,15 +5,15 @@ package service
 
 import "github.com/SidingsMedia/stats/repository"
 
-type CounterService interface {
+type ViewsService interface {
 }
 
-type counterService struct {
-    repo repository.CounterRepository
+type viewsService struct {
+    repo repository.ViewsRepository
 }
 
-func NewCounterService(repository repository.CounterRepository) CounterService {
-    return &counterService{
+func NewViewsService(repository repository.ViewsRepository) ViewsService {
+    return &viewsService{
 		repo: repository,
     }
 }
