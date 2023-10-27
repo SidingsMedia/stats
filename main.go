@@ -7,10 +7,14 @@ import (
 	"log"
 	"strings"
 
-	"github.com/SidingsMedia/api.sidingsmedia.com/util"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+
+	"github.com/SidingsMedia/stats/controller"
+	"github.com/SidingsMedia/stats/repository"
+	"github.com/SidingsMedia/stats/service"
+	"github.com/SidingsMedia/stats/util"
 )
 
 func init() {
@@ -29,15 +33,28 @@ func init() {
 		util.SGetenv(util.TrustedProxiesEnv, util.DefaultTrustedProxies),
 		",",
 	)
+
+	// Timescale settings
+	util.TimescaleUname = util.Mustgetenv(util.TimescaleUnameEnv)
+	util.TimescalePwd = util.Mustgetenv(util.TimescalePwdEnv)
+	util.TimescaleAddr = util.Mustgetenv(util.TimescaleAddrEnv)
+	util.TimescaleName = util.Mustgetenv(util.TimescaleNameEnv)
 }
 
 func main() {
-    // <service>Service := service.New<Service>Service()
+	timescale, err := util.InitTimescaleDB(util.TimescaleAddr, util.TimescaleUname, util.TimescalePwd, util.TimescaleName)
+	if err != nil {
+		log.Fatalf("Failed to connect to timescale database: %s", err)
+	}
+
+	counterRepository := repository.NewCounterRepository(timescale)
+
+	counterService := service.NewCounterService(counterRepository)
 
 	engine := gin.Default()
-    engine.Use(cors.Default())
+	engine.Use(cors.Default())
 
-    // controller.New<Service>Controller(engine, <service>Service)
+	controller.NewCounterController(engine, counterService)
 
 	// Set trusted proxies. If user has set it to * then we can just
 	// ignore it as GIN trusts all by default

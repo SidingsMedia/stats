@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/SidingsMedia/api.sidingsmedia.com/model"
+	"github.com/SidingsMedia/stats/model"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 )
