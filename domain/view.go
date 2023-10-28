@@ -3,12 +3,7 @@
 
 package domain
 
-import "github.com/SidingsMedia/stats/types"
-
 type View struct {
-	Domain    string
-	Schema    types.Schema
-	Port      uint16
-	Path      string
+	Page Page
 	UserAgent string
 }

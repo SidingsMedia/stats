@@ -3,7 +3,7 @@
 
 package model
 
-
 type View struct {
-	Page    string    `json:"code" binding:"required,url"`
+	Page      string `json:"page" binding:"required,url"`
+	UserAgent string `header:"user-agent"`
 }

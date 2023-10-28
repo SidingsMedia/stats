@@ -55,7 +55,7 @@ func main() {
 	engine := gin.Default()
 	engine.Use(cors.Default())
 
-	controller.NewCounterController(engine, counterService)
+	controller.NewViewsController(engine, counterService)
 
 	// Set trusted proxies. If user has set it to * then we can just
 	// ignore it as GIN trusts all by default
